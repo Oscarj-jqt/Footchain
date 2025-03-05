@@ -12,7 +12,9 @@
   "devDependencies": {
     "@nomicfoundation/hardhat-toolbox": "^5.0.0",
     "@nomicfoundation/hardhat-toolbox-viem": "^3.0.0",
+    "@nomicfoundation/hardhat-viem": "^2.0.6",
     "@openzeppelin/hardhat-upgrades": "^3.9.0",
+    "chai": "^5.2.0",
     "hardhat": "^2.22.19",
     "typescript": "^5.8.2",
     "viem": "^2.23.6"

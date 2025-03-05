@@ -6,7 +6,7 @@ import { expect } from "chai";
 import hre from "hardhat";
 import { parseEther } from "viem";
 
-describe("Footchain", function () {
+describe("Payable", function () {
   // We define a fixture to reuse the same setup in every test.
   // We use loadFixture to run this setup once, snapshot that state,
   // and reset Hardhat Network to that snapshot in every test.
@@ -15,41 +15,36 @@ describe("Footchain", function () {
     const [Club1, Club2, supporterAccount, neymarAccount, arylesAccount] =
       await hre.viem.getWalletClients();
 
-    const payable = await hre.viem.deployContract("Footchain");
+    const payable = await hre.viem.deployContract("PayableTest");
 
-    const publicClient = await hre.viem.getPublicClient();
+//     const publicClient = await hre.viem.getPublicClient();
 
     return {
-        payable,
-        Club1,
-        Club2,
-        supporterAccount,
-        arylesAccount,
+      Club1,
+      Club2,
+      supporterAccount,
+      neymarAccount,
+      arylesAccount,
     };
   }
 
-  describe("Football Bank", function () {
-    it("Barca 50, Real -25", async function () {
-      const { payable, Club1, Club2 } = await loadFixture(
+  describe("First test", function () {
+    it("Should deposit 1 ether & withdraw 0.1 ether", async function () {
+      const { payable, owner, otherAccount, otherAccount2 } = await loadFixture(
         deployPayableFixture
       );
 
-       // Déposer 50 Ether dans le contrat
       await payable.write.deposit([], {
-        value: parseEther("50"),
-        from: Club1,
+        value: parseEther("1"),
       });
 
       const balance = await payable.read.getBalance();
-      expect(balance).to.equal(parseEther("50"));
+      expect(balance).to.equal(parseEther("1"));
 
-    // Club2 effectue un retrait de 25 Ether
-      await payable.write.withdraw([parseEther("25")], {
-        from: Club2,
-      });
+      await payable.write.withdraw([parseEther("0.1")]);
 
       const balance2 = await payable.read.getBalance();
-      expect(balance2).to.equal(parseEther("25"));
+      expect(balance2).to.equal(parseEther("0.9"));
     });
   });
 });
