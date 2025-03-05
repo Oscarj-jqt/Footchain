@@ -3,7 +3,7 @@
 
 import { buildModule } from "@nomicfoundation/hardhat-ignition/modules";
 
-// Ce module utilise Hardhat Ignition pour gérer le déploiement du smart contrat Hetic.
+
 const footchainModule = buildModule("footchainModule", (m) => {
   // Déploiement du smart contrat Footchain
   const footchain = m.contract("Footchain");
