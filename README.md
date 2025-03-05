@@ -1,7 +1,7 @@
-# Footchain - Blockchain et Football
+# Footchain
 
 ## Description
-**Footchain** est un projet qui permet aux clubs de football de créer leur propre token (ERC20) et d'utiliser une banque décentralisée pour gérer les transactions, le paiement des joueurs et l'achat de services pour les supporters.
+**Footchain** est un projet développé en Solidity et Next.js qui permet aux clubs de football de créer leur propre token (ERC20) et d'utiliser une banque décentralisée pour gérer les transactions, le paiement des joueurs et l'achat de services pour les supporters.
 
 ## Cas d'Utilisation
 1. **Création du Token** : Un club crée son token (ex. PSG Token) et effectue un minting.
