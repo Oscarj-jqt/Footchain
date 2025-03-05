@@ -17,8 +17,9 @@
 - Déploiement sur réseau de test
 
 ### 2. **Front-end**
-- Développement de l'interface utilisateur
+- Développement de l'interface utilisateur pour que les utilisateurs interagissent avec la blockchain
 - Intégration avec la blockchain via Web3.js ou Ethers.js
+- Affichage des informations : Visualisation du solde des tokens, des transactions
 
 ### 3. **Sécurisation et Audit**
 - Sécurisation des Smart Contracts
