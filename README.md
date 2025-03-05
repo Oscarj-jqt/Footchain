@@ -12,17 +12,17 @@
 ## Répartition des tâches
 
 ### 1. **Back-end**
-- Développement des Smart Contracts (`Footchain.sol` et `FootchainBank.sol`).
-- Tests des contrats.
-- Déploiement sur réseau de test.
+- Développement des Smart Contracts
+- Tests des contrats
+- Déploiement sur réseau de test
 
 ### 2. **Front-end**
-- Développement de l'interface utilisateur.
-- Intégration avec la blockchain via Web3.js ou Ethers.js.
+- Développement de l'interface utilisateur
+- Intégration avec la blockchain via Web3.js ou Ethers.js
 
 ### 3. **Sécurisation et Audit**
-- Sécurisation des Smart Contracts.
-- Audit avant le déploiement final.
+- Sécurisation des Smart Contracts
+- Audit avant le déploiement final
 
 
 
