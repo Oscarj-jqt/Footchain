@@ -36,3 +36,8 @@
     ```bash
     npm install
     ```
+
+3. Compiler les contrats
+   ```bash
+   npx hardhat compile
+   ```
