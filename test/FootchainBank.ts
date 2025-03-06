@@ -49,15 +49,19 @@ describe("Footchain", function () {
       // Vérification des soldes initiaux
       const balanceClub1 = await footchainContract.read.balanceOf([Club1.account.address,]);
       expect(balanceClub1).to.equal(100n);
+      console.log(`Solde initial de Club1: ${balanceClub1}`);
 
       const balanceClub2 = await footchainContract.read.balanceOf([Club2.account.address]);
       expect(balanceClub2).to.equal(100n);
+      console.log(`Solde initial de Club1: ${balanceClub2}`);
 
       const balancePlayer = await footchainContract.read.balanceOf([arylesAccount.account.address]);
       expect(balancePlayer).to.equal(50n);
+      console.log(`Solde initial de Club1: ${balancePlayer}`);
 
       const balanceSupporter = await footchainContract.read.balanceOf([supporterAccount.account.address]);
       expect(balanceSupporter).to.equal(50n);
+      console.log(`Solde initial de Club1: ${balanceSupporter}`);
 
         // Approuver la banque pour dépenser des tokens de Club1
       await footchainContract.write.approve([footchainBankContract.address, 100n], {
