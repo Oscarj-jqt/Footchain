@@ -41,23 +41,27 @@ describe("Footchain", function () {
       const { footchainContract, footchainBankContract, Club1, Club2, supporterAccount, arylesAccount  } =
         await loadFixture(deployfootchainContractFixture);
 
-      await footchainContract.write.mint([Club1.account.address, 100n]);
-      await footchainContract.write.mint([Club2.account.address, 100n]);
-      await footchainContract.write.mint([arylesAccount.account.address, 50n]);
-      await footchainContract.write.mint([supporterAccount.account.address, 50n]);
+      await footchainContract.write.mint([Club1.account.address, 1000n]);
+      await footchainContract.write.mint([Club2.account.address, 1000n]);
+      await footchainContract.write.mint([arylesAccount.account.address, 200n]);
+      await footchainContract.write.mint([supporterAccount.account.address, 100n]);
 
       // Vérification des soldes initiaux
       const balanceClub1 = await footchainContract.read.balanceOf([Club1.account.address,]);
-      expect(balanceClub1).to.equal(100n);
+      expect(balanceClub1).to.equal(1000n);
+      console.log(`Solde initial de Club1: ${balanceClub1}`);
 
       const balanceClub2 = await footchainContract.read.balanceOf([Club2.account.address]);
-      expect(balanceClub2).to.equal(100n);
+      expect(balanceClub2).to.equal(1000n);
+      console.log(`Solde initial de Club1: ${balanceClub2}`);
 
       const balancePlayer = await footchainContract.read.balanceOf([arylesAccount.account.address]);
-      expect(balancePlayer).to.equal(50n);
+      expect(balancePlayer).to.equal(200n);
+      console.log(`Solde initial de Club1: ${balancePlayer}`);
 
       const balanceSupporter = await footchainContract.read.balanceOf([supporterAccount.account.address]);
-      expect(balanceSupporter).to.equal(50n);
+      expect(balanceSupporter).to.equal(100n);
+      console.log(`Solde initial de Club1: ${balanceSupporter}`);
 
         // Approuver la banque pour dépenser des tokens de Club1
       await footchainContract.write.approve([footchainBankContract.address, 100n], {
@@ -80,11 +84,13 @@ describe("Footchain", function () {
       const Club1AfterWithdraw = await footchainContract.read.balanceOf([
         Club1.account.address,
       ]);
-      expect(Club1AfterWithdraw).to.equal(10n);// 100n - 10n retirés
+      expect(Club1AfterWithdraw).to.equal(910n);// 1000n - 10n retirés
+      console.log(`Solde de Club1 après retrait: ${Club1AfterWithdraw}`);
 
        // Vérifie que la footchainBankContract a 90 tokens
       const footchainBankContractAfterWithdraw = await footchainContract.read.balanceOf([footchainBankContract.address]);
       expect(footchainBankContractAfterWithdraw).to.equal(90n);// 100n - 10n retirés
+      console.log(`Solde de la banque après retrait: ${footchainBankContractAfterWithdraw}`);
 
        // Vérification de l'échec si retrait excède le solde de la banque
       await expect(
@@ -94,18 +100,19 @@ describe("Footchain", function () {
       ).to.be.rejectedWith("Insufficient balance");
 
        // Approuver la banque pour dépenser des tokens de Club2 pour payer le joueur
-      await footchainContract.write.approve([footchainBankContract.address, 10n], {
+      await footchainContract.write.approve([footchainBankContract.address, 20n], {
         account: Club2.account,
       });
 
        // Effectuer le paiement du joueur
-      await footchainBankContract.write.payPlayer([arylesAccount.account.address, 10n], {
+      await footchainBankContract.write.payPlayer([arylesAccount.account.address, 20n], {
         account: Club1.account,
       });
       
       // Vérifier que le joueur a été payer
       const balancePlayerAfterPayment = await footchainContract.read.balanceOf([arylesAccount.account.address]);
-      expect(balancePlayerAfterPayment).to.equal(60n);  // 50n + 10n = 60n
+      expect(balancePlayerAfterPayment).to.equal(220n);   // 200n + 20n = 220n
+      console.log(`Solde du joueur après paiement: ${balancePlayerAfterPayment}`);
 
       // Fonction pour transférer des tokens d'un joueur à un autre club
       await footchainContract.write.transfer([Club2.account.address, 50n], {
@@ -114,10 +121,12 @@ describe("Footchain", function () {
 
       // Vérification du solde des clubs après transfert
       const balanceClub1AfterTransfer = await footchainContract.read.balanceOf([Club1.account.address]);
-      expect(balanceClub1AfterTransfer).to.equal(50n);
+      expect(balanceClub1AfterTransfer).to.equal(860n);// 910n - 50n transférés
+      console.log(`Solde de Club1 après transfert: ${balanceClub1AfterTransfer}`);
 
       const balanceClub2AfterTransfer = await footchainContract.read.balanceOf([Club2.account.address]);
-      expect(balanceClub2AfterTransfer).to.equal(150n); // 100n initial + 50n transférés
+      expect(balanceClub2AfterTransfer).to.equal(1050n); // 1000n initial + 50n transférés
+      console.log(`Solde de Club2 après transfert: ${balanceClub2AfterTransfer}`);
     });
   });
 });

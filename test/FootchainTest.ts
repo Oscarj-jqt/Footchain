@@ -1,50 +1,55 @@
-import {
-  time,
-  loadFixture,
-} from "@nomicfoundation/hardhat-toolbox-viem/network-helpers";
+import { time, loadFixture } from "@nomicfoundation/hardhat-toolbox-viem/network-helpers";
 import { expect } from "chai";
 import hre from "hardhat";
-import { parseEther } from "viem";
 
-describe("Payable", function () {
-  // We define a fixture to reuse the same setup in every test.
-  // We use loadFixture to run this setup once, snapshot that state,
-  // and reset Hardhat Network to that snapshot in every test.
-  async function deployPayableFixture() {
-    // Contracts are deployed using the first signer/account by default
-    const [Club1, Club2, supporterAccount, neymarAccount, arylesAccount] =
-      await hre.viem.getWalletClients();
+describe("FootchainBank", function () {
+  async function deployFixture() {
+    const [Club1, Club2, supporter, player] = await hre.viem.getWalletClients();
 
-    const payable = await hre.viem.deployContract("PayableTest");
+    // Déploiement des contrats
+    const footchain = await hre.viem.deployContract("Footchain", ["Footchain", "FOOT"]);
+    const footchainBank = await hre.viem.deployContract("FootchainBank", [footchain.address, Club1.account.address]);
 
-//     const publicClient = await hre.viem.getPublicClient();
-
-    return {
-      Club1,
-      Club2,
-      supporterAccount,
-      neymarAccount,
-      arylesAccount,
-    };
+    return { footchain, footchainBank, Club1, Club2, supporter, player };
   }
 
-  describe("First test", function () {
-    it("Should deposit 1 ether & withdraw 0.1 ether", async function () {
-      const { payable, owner, otherAccount, otherAccount2 } = await loadFixture(
-        deployPayableFixture
-      );
+  it("🔹 Mint des tokens pour les clubs et les joueurs", async function () {
+    const { footchain, Club1, Club2, player } = await loadFixture(deployFixture);
 
-      await payable.write.deposit([], {
-        value: parseEther("1"),
-      });
+    await footchain.write.mint([Club1.account.address, 100n]);
+    await footchain.write.mint([Club2.account.address, 100n]);
+    await footchain.write.mint([player.account.address, 50n]);
 
-      const balance = await payable.read.getBalance();
-      expect(balance).to.equal(parseEther("1"));
+    expect(await footchain.read.balanceOf([Club1.account.address])).to.equal(100n);
+    expect(await footchain.read.balanceOf([Club2.account.address])).to.equal(100n);
+    expect(await footchain.read.balanceOf([player.account.address])).to.equal(50n);
+  });
 
-      await payable.write.withdraw([parseEther("0.1")]);
+  it("🔹 Club1 dépose et retire des tokens", async function () {
+    const { footchain, footchainBank, Club1 } = await loadFixture(deployFixture);
 
-      const balance2 = await payable.read.getBalance();
-      expect(balance2).to.equal(parseEther("0.9"));
-    });
+    await footchain.write.mint([Club1.account.address, 100n]);
+
+    await footchain.write.approve([footchainBank.address, 100n], { account: Club1.account });
+    await footchainBank.write.deposit([100n], { account: Club1.account });
+
+    expect(await footchain.read.balanceOf([footchainBank.address])).to.equal(100n);
+
+    await footchainBank.write.withdraw([50n], { account: Club1.account });
+
+    expect(await footchain.read.balanceOf([footchainBank.address])).to.equal(50n);
+    expect(await footchain.read.balanceOf([Club1.account.address])).to.equal(50n);
+  });
+
+  it("🔹 Un club paie un joueur", async function () {
+    const { footchain, footchainBank, Club1, player } = await loadFixture(deployFixture);
+
+    await footchain.write.mint([Club1.account.address, 100n]);
+    await footchain.write.approve([footchainBank.address, 100n], { account: Club1.account });
+    await footchainBank.write.deposit([100n], { account: Club1.account });
+
+    await footchainBank.write.payPlayer([player.account.address, 20n], { account: Club1.account });
+
+    expect(await footchain.read.balanceOf([player.account.address])).to.equal(20n);
   });
 });
