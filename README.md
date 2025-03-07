@@ -48,10 +48,11 @@ Pour installer et exécuter le projet, vous aurez besoin de :
  ```
 
 
-## Contributeurs au projet
+## Participants
 
-Oscar JACQUET - Développeur back-end
-Alexis HU - Développeur full-stack
-Issa ABDOULAYE - Développeur front-end
-Hugo DA ROCHA - Développeur front
-Aryles BEN CHABANE - Développeur front-end
+ - Oscar JACQUET    - Développeur Back End
+ - Alexis HU        - Développeur Full Stack
+ - Issa Abdoulaye  - Développeur Front End
+ - Aryles Ben Chabane - Développeur Full Stack
+ - Hugo Da Rocha    - Développeur Back End
+ 
