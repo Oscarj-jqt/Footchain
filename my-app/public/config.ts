@@ -1,6 +1,6 @@
 import "@rainbow-me/rainbowkit/styles.css"; // Importer les styles de RainbowKit
 import { getDefaultConfig } from "@rainbow-me/rainbowkit"; // Import de getDefaultConfig
-import { hardhat } from "wagmi/chains"; // Import de la chaîne Hardhat de wagmi
+import { mainnet } from "wagmi/chains"; // Import de la chaîne mainnet de wagmi
 
 /**
  * Configuration pour la librairie RainbowKit.
@@ -8,8 +8,8 @@ import { hardhat } from "wagmi/chains"; // Import de la chaîne Hardhat de wagmi
  * y compris le nom de l'application et la blockchain utilisée.
  */
 export const config = getDefaultConfig({
-  appName: "Footchain",
-  projectId: "YOUR_PROJECT_ID",
-  chains: [hardhat], 
+  appName: "FootchainDapp",
+  projectId: "1",
+  chains: [mainnet], 
   ssr: true, 
 });

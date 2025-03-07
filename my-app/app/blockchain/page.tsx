@@ -1,47 +1,45 @@
-// app/blockchain/page.tsx
-
 "use client";
 
 import { useState } from "react";
-import { useAccount, useBalance, usePrepareContractWrite } from "wagmi";
-import { FOOTCHAIN_ABI, FOOTCHAIN_ADDRESS } from "@/public/constants/footchain";  // Import du contrat Footchain
-import { FOOTCHAIN_BANK_ABI, FOOTCHAIN_BANK_ADDRESS } from "@/public/constants/footchainBank"; // Import du contrat FootchainBank
-import { ConnectButton } from "@rainbow-me/rainbowkit";  // Import du bouton de connexion RainbowKit
-import Image from "next/image"; // Import d'Image de Next.js pour gérer les images
+import { useAccount, useBalance, useWriteContract } from "wagmi";
+import { FOOTCHAIN_ABI, FOOTCHAIN_ADDRESS } from "@/public/constants/footchain";  
+// import { ConnectButton } from "@rainbow-me/rainbowkit";  
+import Image from "next/image"; 
 
-// Fonction pour la page Blockchain
 export default function BlockchainPage() {
   const [amount, setAmount] = useState<number>(0);
   const [isMinting, setIsMinting] = useState<boolean>(false);
 
-  // Utilisation de Wagmi pour gérer la connexion et le solde
   const { isConnected, address } = useAccount();
   const { data: balanceData } = useBalance({ address });
 
-  // Préparation pour l'appel à la fonction mint de Footchain
-  const { config: mintConfig } = usePrepareContractWrite({
-    address: FOOTCHAIN_ADDRESS,
-    abi: FOOTCHAIN_ABI,
-    functionName: "mint",
-    args: [address, amount],
-  });
-
-  // Fonction pour appeler le mint
-  const { write: mint } = useContractWrite(mintConfig);
+  const { writeContractAsync } = useWriteContract();
 
   const handleMint = async () => {
+    if (!isConnected || !address || amount <= 0) {
+      alert("Please enter a valid amount and connect your wallet.");
+      return;
+    }
+
     setIsMinting(true);
     try {
-      await mint();
-      alert("Minting successful!");
+      const txHash = await writeContractAsync({
+        address: FOOTCHAIN_ADDRESS,
+        abi: FOOTCHAIN_ABI,
+        functionName: "mint",
+        args: [address, amount],
+      });
+
+      console.log("Transaction Hash:", txHash); // Affiche le hash de la transaction
+      alert(`Minting successful! Transaction Hash: ${txHash}`);
     } catch (error) {
       console.error("Error during minting", error);
+      alert("Minting failed.");
     } finally {
       setIsMinting(false);
     }
   };
 
-  // Affichage de la page
   return (
     <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
       <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
@@ -71,7 +69,7 @@ export default function BlockchainPage() {
             />
             <button
               onClick={handleMint}
-              disabled={isMinting}
+              disabled={isMinting || amount <= 0}
               className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
             >
               {isMinting ? "Minting..." : "Mint"}
@@ -85,7 +83,7 @@ export default function BlockchainPage() {
       <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
         <a
           className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
+          href="https://nextjs.org/learn"
           target="_blank"
           rel="noopener noreferrer"
         >
@@ -98,6 +96,7 @@ export default function BlockchainPage() {
           />
           Learn
         </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdi
+      </footer>
+    </div>
+  );
+}

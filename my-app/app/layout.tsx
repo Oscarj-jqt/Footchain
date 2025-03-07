@@ -1,8 +1,6 @@
-// app/layout.tsx
-
-import { Provider } from "@/public/components/provider"; // ton composant Provider
-import { WagmiProvider } from "wagmi";  // Assure-toi que WagmiProvider est bien importé
-import { config } from "@/config"; // Assure-toi que config est bien importé
+import { Provider } from "@/public/components/Provider";
+import { WagmiProvider } from "wagmi";  
+import { config } from "@/public/config";
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
