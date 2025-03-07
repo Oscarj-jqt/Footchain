@@ -1,15 +1,15 @@
 import { buildModule } from "@nomicfoundation/hardhat-ignition/modules";
 
 const footchainModule = buildModule("footchainModule", (m) => {
+  // Définir les arguments nécessaires pour le constructeur
+  const name = "Footchain"; // Le nom du token
+  const symbol = "FOOT"; // Le symbole du token
 
-  //addresse Ethereum valide
-  const ownerAddress = "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266";
-  const initialValue = m.getParameter("initialValue", "100");
-
-
-  const footchain = m.contract("Footchain", [ownerAddress, initialValue]);
+  // Déployer le contrat avec ces arguments
+  const footchain = m.contract("Footchain", [name, symbol]);
 
   return { footchain };
 });
 
 export default footchainModule;
+

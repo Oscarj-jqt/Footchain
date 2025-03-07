@@ -16,7 +16,7 @@ describe("FootchainBank", function () {
   it("🔹 Mint des tokens pour les clubs et les joueurs", async function () {
     const { footchain, Club1, Club2, arylesAccount } = await loadFixture(deployFixture);
 
-     // Mint initial pour les clubs et joueurs
+    // Mint initial pour les clubs et joueurs
     await footchain.write.mint([Club1.account.address, 1000n]);
     await footchain.write.mint([Club2.account.address, 1000n]);
     await footchain.write.mint([arylesAccount.account.address, 500n]);
@@ -30,20 +30,20 @@ describe("FootchainBank", function () {
   it("🔹 Club1 dépose et retire des tokens", async function () {
     const { footchain, footchainBank, Club1 } = await loadFixture(deployFixture);
 
-     // Mint et approbation avant le dépôt
+    // Mint et approbation avant le dépôt
     await footchain.write.mint([Club1.account.address, 1000n]);
     await footchain.write.approve([footchainBank.address, 100n], { account: Club1.account });
 
-      // Club1 dépose 100 tokens dans la banque
+    // Club1 dépose 100 tokens dans la banque
     await footchainBank.write.deposit([100n], { account: Club1.account });
 
-     // Vérification que la banque a 100 tokens
+    // Vérification que la banque a 100 tokens
     expect(await footchain.read.balanceOf([footchainBank.address])).to.equal(100n);
 
     // Club1 retire 50 tokens de la banque
     await footchainBank.write.withdraw([50n], { account: Club1.account });
 
-     // Vérification du solde de la banque et du solde de Club1 après retrait
+    // Vérification du solde de la banque et du solde de Club1 après retrait
     expect(await footchain.read.balanceOf([footchainBank.address])).to.equal(50n);
     expect(await footchain.read.balanceOf([Club1.account.address])).to.equal(950n); // 1000n - 50n retirés
   });
