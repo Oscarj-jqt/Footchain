@@ -1,43 +1,57 @@
 # Footchain
 
-## Description
-**Footchain** est une web app basée sur la blockchain développée en Solidity et Next.js. Elle permet aux clubs de football de créer leur propre token (ERC20) et d'utiliser une banque décentralisée pour gérer les transactions, le paiement des joueurs et l'achat de services pour les supporters.
+**Footchain** est une plateforme décentralisée permettant la gestion de tokens représentant des joueurs, des billets, des maillots et des salaires dans l'industrie du football. Grâce à la blockchain, les clubs peuvent effectuer des transferts de joueurs, gérer des actifs et garantir une transparence totale dans les transactions. Le projet utilise des contrats intelligents écrits en **Solidity** et un backend en **TypeScript** pour interagir avec la blockchain via **ethers.js**.
 
-## Cas d'Utilisation
-1. **Création du Token** : Un club crée son token (ex. PSG Token) et effectue un minting.
-2. **Achat de Tokens** : Les supporters achètent des tokens pour accéder à des places, maillots, etc.
-3. **Paiement des Joueurs** : Le club paie ses joueurs en tokens via la banque.
-4. **Transfert de Tokens** : Les tokens des joueurs peuvent être transférés lors des transferts.
+## Description des Choix Techniques
 
-## Répartition des tâches
+### Blockchain - Ethereum et Solidity
+- **Ethereum** a été choisi pour sa sécurité et sa large adoption, permettant de créer des applications décentralisées.
+- **Solidity** est utilisé pour développer les contrats intelligents qui gèrent les tokens (joueurs, billets, maillots) et les salaires.
+- **Hardhat** est utilisé pour le développement et le test des contrats intelligents dans un environnement local.
+- **ethers.js** permet d'interagir avec la blockchain pour lire et écrire dans les contrats.
 
-### 1. **Back-end**
-- Développement des Smart Contracts
-- Tests des contrats
-- Déploiement sur réseau de test
+### Backend - TypeScript
+- **TypeScript** offre une sécurité de type renforcée et facilite la maintenance du code.
+- **Node.js** est utilisé pour exécuter le backend qui interagit avec la blockchain.
+- **dotenv** permet de gérer les variables d'environnement, telles que la clé privée et l'URL RPC locale.
 
-### 2. **Front-end**
-- Développement de l'interface utilisateur pour que les utilisateurs interagissent avec la blockchain
-- Intégration avec la blockchain via Web3.js ou Ethers.js
-- Affichage des informations : Visualisation du solde des tokens, des transactions
+### Wallet - MetaMask
+- **MetaMask** est utilisé comme wallet pour permettre aux utilisateurs de signer des transactions et interagir avec les contrats intelligents.
 
-### 3. **Sécurisation et Audit**
-- Sécurisation des Smart Contracts
-- Audit avant le déploiement final
+### Transactions et Gestion des Actifs
+- **Tokens des joueurs** : Représentent les joueurs et permettent aux clubs de gérer les transferts de manière sécurisée.
+- **Tokens des billets et maillots** : Permettent aux fans d'acheter, vendre ou échanger des billets et des maillots.
+- **Transferts et salaires** : Une banque décentralisée gère les transferts de joueurs et les paiements de salaires via des contrats intelligents, assurant la transparence des transactions.
 
+## Prérequis
 
+Pour installer et exécuter le projet, vous aurez besoin de :
+
+- **Node.js** 16.x ou supérieur
+- **npm** ou **yarn** pour gérer les dépendances
+- **Hardhat** pour compiler et déployer les contrats intelligents
+- **MetaMask** pour gérer les wallets et signer les transactions
+- **dotenv** pour la gestion des variables d'environnement
 
 ## Installation
-1. Clonez le projet :
-   ```bash
-   git clone https://github.com/ton-compte/footchain.git
-   ```
-2. Installation des dépendances 
-    ```bash
-    npm install
-    ```
 
-3. Compiler les contrats
+1. **Cloner le repository :**
+
    ```bash
-   npx hardhat compile
-   ```
+   git clone https://github.com/votre-utilisateur/footchain.git
+   cd footchain
+
+2. **Installer les dépendances :**
+
+ ```bash
+ npm install
+ ```
+
+
+## Contributeurs au projet
+
+Oscar JACQUET - Développeur back-end
+Alexis HU - Développeur full-stack
+Issa ABDOULAYE - Développeur front-end
+Hugo DA ROCHA - Développeur front
+Aryles BEN CHABANE - Développeur front-end
