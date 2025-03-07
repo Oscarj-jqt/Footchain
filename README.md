@@ -1,6 +1,6 @@
 # Footchain
 
-**Footchain** est une plateforme décentralisée permettant la gestion de tokens représentant des joueurs, des billets, des maillots et des salaires dans l'industrie du football. Grâce à la blockchain, les clubs peuvent effectuer des transferts de joueurs, gérer des actifs et garantir une transparence totale dans les transactions. Le projet utilise des contrats intelligents écrits en **Solidity** et un backend en **TypeScript** pour interagir avec la blockchain via **ethers.js**.
+**Footchain** est une plateforme décentralisée permettant la gestion de tokens représentant des joueurs, des billets, des maillots et des salaires dans l'industrie du football. Grâce à la blockchain, les clubs peuvent effectuer des transferts de joueurs, gérer des actifs et garantir une transparence totale dans les transactions. Le projet utilise des contrats intelligents écrits en **Solidity** et un backend en **TypeScript** pour interagir avec la blockchain.
 
 ## Description des Choix Techniques
 
@@ -13,7 +13,7 @@
 ### Backend - TypeScript
 - **TypeScript** offre une sécurité de type renforcée et facilite la maintenance du code.
 - **Node.js** est utilisé pour exécuter le backend qui interagit avec la blockchain.
-- **dotenv** permet de gérer les variables d'environnement, telles que la clé privée et l'URL RPC locale.
+
 
 ### Wallet - MetaMask
 - **MetaMask** est utilisé comme wallet pour permettre aux utilisateurs de signer des transactions et interagir avec les contrats intelligents.
@@ -21,7 +21,7 @@
 ### Transactions et Gestion des Actifs
 - **Tokens des joueurs** : Représentent les joueurs et permettent aux clubs de gérer les transferts de manière sécurisée.
 - **Tokens des billets et maillots** : Permettent aux fans d'acheter, vendre ou échanger des billets et des maillots.
-- **Transferts et salaires** : Une banque décentralisée gère les transferts de joueurs et les paiements de salaires via des contrats intelligents, assurant la transparence des transactions.
+- **Transferts et salaires** : Le club gère les transferts de joueurs et les paiements de salaires via des contrats intelligents, assurant la transparence des transactions.
 
 ## Prérequis
 
