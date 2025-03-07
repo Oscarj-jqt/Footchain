@@ -82,8 +82,5 @@ describe("FootchainBank", function () {
     // Vérification que le joueur a bien été payé
     expect(balancePlayerAfter).to.equal(550n); // 500n + 50n = 550n
   });
-<<<<<<< HEAD
-});
-=======
-});
->>>>>>> c9c451516510c1b0d5530d1a6a592d8176f904cf
+
+})
