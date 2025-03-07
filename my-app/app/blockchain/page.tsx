@@ -1,102 +1,88 @@
 "use client";
 
-import { useState } from "react";
-import { useAccount, useBalance, useWriteContract } from "wagmi";
-import { FOOTCHAIN_ABI, FOOTCHAIN_ADDRESS } from "@/public/constants/footchain";  
-// import { ConnectButton } from "@rainbow-me/rainbowkit";  
-import Image from "next/image"; 
+import { FOOTCHAIN_ABI } from "@/public/constants/footchain";
+import { FOOTCHAIN_BANK_ABI } from "@/public/constants/footchainBank";
+import { ConnectButton } from "@rainbow-me/rainbowkit";
+import { useAccount, useReadContract, useWriteContract } from "wagmi";
 
-export default function BlockchainPage() {
-  const [amount, setAmount] = useState<number>(0);
-  const [isMinting, setIsMinting] = useState<boolean>(false);
+// Adresse des contrats
+const FOOTCHAIN_ADDRESS = "0x5FbDB2315678afecb367f032d93F642f64180aa3";
+const FOOTCHAINBANK_ADDRESS = "0x5FbDB2315678afecb367f032d93F642f64180aa3";
 
-  const { isConnected, address } = useAccount();
-  const { data: balanceData } = useBalance({ address });
+export default function Blockchain() {
+  const { writeContract, isPending, isSuccess, isError } = useWriteContract();
+  const { address, isConnected } = useAccount();
 
-  const { writeContractAsync } = useWriteContract();
+  // Lecture du solde du contrat Footchain
+  const { data: balance, refetch } = useReadContract({
+    abi: FOOTCHAIN_ABI,
+    functionName: "balanceOf",
+    address: FOOTCHAIN_ADDRESS,
+    args: address ? [address] : undefined,
+  });
 
-  const handleMint = async () => {
-    if (!isConnected || !address || amount <= 0) {
-      alert("Please enter a valid amount and connect your wallet.");
-      return;
-    }
+  // Lecture du solde du contrat FootchainBank
+  const { data: bankBalance, refetch: refetchBank } = useReadContract({
+    abi: FOOTCHAIN_BANK_ABI,
+    functionName: "getBankBalance",
+    address: FOOTCHAINBANK_ADDRESS,
+  });
 
-    setIsMinting(true);
-    try {
-      const txHash = await writeContractAsync({
-        address: FOOTCHAIN_ADDRESS,
-        abi: FOOTCHAIN_ABI,
-        functionName: "mint",
-        args: [address, amount],
-      });
+  // Fonction pour effectuer un dépôt
+  const handleDeposit = (amount: number) => {
+    if (!address) return;
 
-      console.log("Transaction Hash:", txHash); // Affiche le hash de la transaction
-      alert(`Minting successful! Transaction Hash: ${txHash}`);
-    } catch (error) {
-      console.error("Error during minting", error);
-      alert("Minting failed.");
-    } finally {
-      setIsMinting(false);
-    }
+    writeContract({
+      abi: FOOTCHAIN_BANK_ABI,
+      functionName: "deposit",
+      address: FOOTCHAINBANK_ADDRESS,
+      args: [amount],
+    });
   };
 
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">Interact with the Footchain contract to mint tokens.</li>
-          <li>Check your balance and initiate minting.</li>
-        </ol>
+    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 p-8">
+      <h1 className="text-8xl font-bold mb-8 text-gray-800">Footchain Dapp</h1>
+      <ConnectButton />
 
-        {isConnected ? (
-          <div className="flex flex-col items-center gap-4">
-            <p>Address: {address}</p>
-            <p>Balance: {balanceData?.formatted} {balanceData?.symbol}</p>
+      {isConnected ? (
+        <div className="flex flex-col items-center justify-center">
+          <p className="text-lg text-gray-500 mb-4">
+            Your Footchain balance: {balance ? balance.toString() : "Loading..."}
+          </p>
+          <p className="text-lg text-gray-500 mb-4">
+            FootchainBank balance: {bankBalance ? bankBalance.toString() : "Loading..."}
+          </p>
+
+          <button
+            onClick={() => refetch()}
+            className="mt-4 bg-blue-500 text-white px-6 py-2 rounded-full hover:bg-blue-600 transition-colors mb-4"
+          >
+            Refresh
+          </button>
+
+          <div className="mt-4">
             <input
               type="number"
-              value={amount}
-              onChange={(e) => setAmount(Number(e.target.value))}
-              className="border border-solid border-gray-300 rounded p-2"
-              placeholder="Amount to mint"
+              placeholder="Amount to deposit"
+              className="mb-2 p-2 border rounded-md"
+              onChange={(e) => handleDeposit(Number(e.target.value))}
             />
             <button
-              onClick={handleMint}
-              disabled={isMinting || amount <= 0}
-              className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
+              onClick={() => handleDeposit(100)} // Déposer un montant de 100 tokens (modifiable)
+              className="bg-green-500 text-white px-6 py-2 rounded-full hover:bg-green-600 transition-colors mb-4"
             >
-              {isMinting ? "Minting..." : "Mint"}
+              Deposit 100 Footchain Tokens
             </button>
           </div>
-        ) : (
-          <p>Please connect your wallet to interact with the contract.</p>
-        )}
-      </main>
+        </div>
+      ) : (
+        <p className="text-lg text-gray-500">Please connect your wallet to interact with the dApp.</p>
+      )}
 
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-      </footer>
+      {isPending && <p className="text-yellow-500">Transaction in progress...</p>}
+      {isSuccess && <p className="text-green-500">Transaction successful!</p>}
+      {isError && <p className="text-red-500">Transaction failed.</p>}
     </div>
   );
 }
