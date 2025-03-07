@@ -1,6 +1,10 @@
 # Footchain
 
-**Footchain** est une plateforme décentralisée permettant la gestion de tokens représentant des joueurs, des billets, des maillots et des salaires dans l'industrie du football. Grâce à la blockchain, les clubs peuvent effectuer des transferts de joueurs, gérer des actifs et garantir une transparence totale dans les transactions. Le projet utilise des contrats intelligents écrits en **Solidity** et un backend en **TypeScript** pour interagir avec la blockchain.
+**Footchain** est une plateforme décentralisée permettant la gestion de tokens représentant des joueurs, des billets, des maillots et des salaires dans l'industrie du football. 
+
+Grâce à la blockchain, les clubs peuvent effectuer des transferts de joueurs, gérer des actifs et garantir une transparence totale dans les transactions. 
+
+Le projet utilise des contrats intelligents écrits en **Solidity** et un backend en **TypeScript** pour interagir avec la blockchain.
 
 ## Description des Choix Techniques
 
