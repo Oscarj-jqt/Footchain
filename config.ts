@@ -3,8 +3,8 @@ import { mainnet } from "wagmi/chains";
 
 // Configuration de RainbowKit et Wagmi
 export const config = getDefaultConfig({
-  appName: "Footchain",  
-  projectId: "YOUR_PROJECT_ID", 
+  appName: "FootchainApp",  
+  projectId: "1", 
   chains: [mainnet], 
   ssr: true, 
 });

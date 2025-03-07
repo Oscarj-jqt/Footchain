@@ -8,8 +8,8 @@ import { hardhat } from "wagmi/chains"; // Import de la chaîne Hardhat de wagmi
  * y compris le nom de l'application et la blockchain utilisée.
  */
 export const config = getDefaultConfig({
-  appName: "Dapp Hetic", // Nom de l'application pour RainbowKit
-  projectId: "YOUR_PROJECT_ID", // Ton project ID (si tu en as un, sinon supprime cette ligne)
-  chains: [hardhat], // Chaîne de test, ici Hardhat
-  ssr: true, // Si ta dApp utilise le rendu côté serveur (SSR)
+  appName: "Footchain",
+  projectId: "YOUR_PROJECT_ID",
+  chains: [hardhat], 
+  ssr: true, 
 });

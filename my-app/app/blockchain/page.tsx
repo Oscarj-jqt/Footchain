@@ -3,11 +3,10 @@
 "use client";
 
 import { useState } from "react";
-import { useAccount, useBalance, useContractWrite, usePrepareContractWrite } from "wagmi";
-import { FOOTCHAIN_ABI, FOOTCHAIN_ADDRESS } from "@/public/footchain";  // Import du contrat Footchain
-import { FOOTCHAIN_BANK_ABI, FOOTCHAIN_BANK_ADDRESS } from "@/public/footchainBank"; // Import du contrat FootchainBank
+import { useAccount, useBalance, usePrepareContractWrite } from "wagmi";
+import { FOOTCHAIN_ABI, FOOTCHAIN_ADDRESS } from "@/public/constants/footchain";  // Import du contrat Footchain
+import { FOOTCHAIN_BANK_ABI, FOOTCHAIN_BANK_ADDRESS } from "@/public/constants/footchainBank"; // Import du contrat FootchainBank
 import { ConnectButton } from "@rainbow-me/rainbowkit";  // Import du bouton de connexion RainbowKit
-import { useConfig } from "@/hooks/useConfig";  // Import d'un hook personnalisé pour la configuration
 import Image from "next/image"; // Import d'Image de Next.js pour gérer les images
 
 // Fonction pour la page Blockchain

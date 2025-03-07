@@ -22,11 +22,8 @@
     "@openzeppelin/contracts": "^5.2.0",
     "@rainbow-me/rainbowkit": "^2.2.4",
     "@tanstack/react-query": "^5.67.1",
-<<<<<<< HEAD
     "dotenv": "^16.4.7",
-=======
     "chai": "^4.5.0",
->>>>>>> c9c451516510c1b0d5530d1a6a592d8176f904cf
     "wagmi": "^2.14.12"
   }
 }
