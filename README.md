@@ -57,6 +57,6 @@ Pour installer et exécuter le projet, vous aurez besoin de :
  - Oscar JACQUET    - Développeur Back End
  - Alexis HU        - Développeur Full Stack
  - Issa Abdoulaye  - Développeur Front End
- - Aryles Ben Chabane - Développeur Full Stack
- - Hugo Da Rocha    - Développeur Back End
+ - Aryles Ben Chabane - Développeur Back End
+ - Hugo Da Rocha    - Développeur Front End
  
