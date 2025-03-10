@@ -42,7 +42,7 @@ Pour installer et exécuter le projet, vous aurez besoin de :
 1. **Cloner le repository :**
 
    ```bash
-   git clone https://github.com/votre-utilisateur/footchain.git
+   git clone https://github.com/Oscarj-jqt/Footchain
    cd footchain
 
 2. **Installer les dépendances :**
